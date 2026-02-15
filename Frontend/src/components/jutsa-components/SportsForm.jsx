@@ -66,7 +66,7 @@ const RegisterForm = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/sports/",
+        "http://localhost:7005/api/sports/",
         formData
       );
       toast.success(response.data.message);
@@ -86,7 +86,7 @@ const RegisterForm = () => {
     const fetchFormVisibility = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/form/${formName}`
+          `http://localhost:7005/api/form/${formName}`
         );
         const data = response.data;
         setShowForm(data[formName] === true);

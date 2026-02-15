@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/users";
+const API = "http://localhost:7005/api/users";
 
 export const LoginUser = async (data) => {
   const response = await fetch(`${API}/auth/login`, {

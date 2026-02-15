@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/positions";
+const API = "http://localhost:7005/api/positions";
 
 // Fetch position details
 export const fetchPositionDetailsFromAPI = async () => {

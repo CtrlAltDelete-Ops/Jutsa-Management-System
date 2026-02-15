@@ -85,7 +85,7 @@ const HeroSection = () => {
         {/* Avatar Circles */}
         <div>
           <AvatarCircles
-            numPeople={5000}
+            numPeople={7005}
             avatarUrls={avatars}
             className="items-center justify-center"
           />

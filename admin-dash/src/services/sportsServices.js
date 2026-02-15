@@ -1,5 +1,5 @@
 export const fetchSportsDetailsFromAPI = async () => {
-  const response = await fetch("http://localhost:5000/api/sports");
+  const response = await fetch("http://localhost:7005/api/sports");
 
   if (!response.ok) {
     throw new Error("Something went wrong");
@@ -11,7 +11,7 @@ export const fetchSportsDetailsFromAPI = async () => {
 };
 
 export const fetchSportsByIdAPI = async (id) => {
-  const response = await fetch(`http://localhost:5000/api/sports/${id}`);
+  const response = await fetch(`http://localhost:7005/api/sports/${id}`);
 
   if (!response.ok) {
     const error = await response.json();
@@ -23,7 +23,7 @@ export const fetchSportsByIdAPI = async (id) => {
 };
 
 export const addSports = async (SportsData) => {
-  const response = await fetch("http://localhost:5000/api/sports", {
+  const response = await fetch("http://localhost:7005/api/sports", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export const addSports = async (SportsData) => {
 };
 
 export const updateSports = async (id, SportsData) => {
-  const response = await fetch(`http://localhost:5000/api/sports/${id}`, {
+  const response = await fetch(`http://localhost:7005/api/sports/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export const updateSports = async (id, SportsData) => {
 };
 
 export const deleteSports = async (id) => {
-  const response = await fetch(`http://localhost:5000/api/sports/${id}`, {
+  const response = await fetch(`http://localhost:7005/api/sports/${id}`, {
     method: "DELETE",
   });
 

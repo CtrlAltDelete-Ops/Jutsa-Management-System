@@ -1,5 +1,5 @@
 export const fetchCompetitorsFromAPI = async () => {
-  const response = await fetch("http://localhost:5000/api/competitors");
+  const response = await fetch("http://localhost:7005/api/competitors");
 
   if (!response.ok) {
     throw new Error("Failed to fetch competitors");
@@ -10,7 +10,7 @@ export const fetchCompetitorsFromAPI = async () => {
 };
 
 export const fetchCompetitorByIdAPI = async (id) => {
-  const response = await fetch(`http://localhost:5000/api/competitors/${id}`);
+  const response = await fetch(`http://localhost:7005/api/competitors/${id}`);
 
   if (!response.ok) {
     const error = await response.json();
@@ -22,7 +22,7 @@ export const fetchCompetitorByIdAPI = async (id) => {
 };
 
 export const addCompetitor = async (competitorData) => {
-  const response = await fetch("http://localhost:5000/api/competitors", {
+  const response = await fetch("http://localhost:7005/api/competitors", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export const addCompetitor = async (competitorData) => {
 
 export const updateCompetitor = async (id, competitorData) => {
   const response = await fetch(
-    `http://localhost:5000/api/competitors/update/${id}`,
+    `http://localhost:7005/api/competitors/update/${id}`,
     {
       method: "PUT",
       headers: {
@@ -60,7 +60,7 @@ export const updateCompetitor = async (id, competitorData) => {
 
 export const deleteCompetitor = async (id) => {
   const response = await fetch(
-    `http://localhost:5000/api/competitors/${id}`,
+    `http://localhost:7005/api/competitors/${id}`,
     {
       method: "DELETE",
     }

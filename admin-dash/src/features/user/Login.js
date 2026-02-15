@@ -37,7 +37,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/users/auth/login`,
+        `http://localhost:7005/api/users/auth/login`,
         {
           method: "POST",
           headers: {

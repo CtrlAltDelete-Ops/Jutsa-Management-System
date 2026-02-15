@@ -117,7 +117,7 @@ const RegisterForm = () => {
     const fetchFormVisibility = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/form/${formName}`
+          `http://localhost:7005/api/form/${formName}`
         );
         const data = response.data;
         if (data[formName] === true) {

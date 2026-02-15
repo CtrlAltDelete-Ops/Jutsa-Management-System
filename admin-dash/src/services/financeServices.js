@@ -1,5 +1,5 @@
 export const fetchFinanceDetailsFromAPI = async () => {
-  const response = await fetch("http://localhost:5000/api/finances");
+  const response = await fetch("http://localhost:7005/api/finances");
 
   if (!response.ok) {
     throw new Error("Failed to fetch finance details");
@@ -10,7 +10,7 @@ export const fetchFinanceDetailsFromAPI = async () => {
 };
 
 export const fetchFinanceByIdAPI = async (id) => {
-  const response = await fetch(`http://localhost:5000/api/finances/${id}`);
+  const response = await fetch(`http://localhost:7005/api/finances/${id}`);
 
   if (!response.ok) {
     const error = await response.json();
@@ -23,7 +23,7 @@ export const fetchFinanceByIdAPI = async (id) => {
 };
 
 export const addFinance = async (financeData) => {
-  const response = await fetch("http://localhost:5000/api/finances/reg", {
+  const response = await fetch("http://localhost:7005/api/finances/reg", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export const addFinance = async (financeData) => {
 
 export const updateFinance = async (id, financeData) => {
   const response = await fetch(
-    `http://localhost:5000/api/finances/update/${id}`,
+    `http://localhost:7005/api/finances/update/${id}`,
     {
       method: "PUT",
       headers: {
@@ -61,7 +61,7 @@ export const updateFinance = async (id, financeData) => {
 
 export const deleteFinance = async (id) => {
   const response = await fetch(
-    `http://localhost:5000/api/finances/${id}`,
+    `http://localhost:7005/api/finances/${id}`,
     {
       method: "DELETE",
     }
