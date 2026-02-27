@@ -6,22 +6,18 @@ import {
   updateMember,
   deleteMember,
 } from "../controllers/member-controllers.js";
+import authMiddleware from "../middlewares/auth-middleware.js";
+import AuthorizeRole from "../middlewares/role-middleware.js";
 
 const router = express.Router();
 
-// Register a new member
-router.post("/", registerMember);
+// Read — all authenticated roles
+router.get("/", authMiddleware, getAllMembers);
+router.get("/:id", authMiddleware, getMemberById);
 
-// Get all members
-router.get("/", getAllMembers);
-
-// Get a member by ID
-router.get("/:id", getMemberById);
-
-// Update a member
-router.put("/:id", updateMember);
-
-// Delete a member
-router.delete("/:id", deleteMember);
+// Write — admin and above only
+router.post("/", authMiddleware, AuthorizeRole("SUPER_ADMIN", "ADMIN"), registerMember);
+router.put("/:id", authMiddleware, AuthorizeRole("SUPER_ADMIN", "ADMIN"), updateMember);
+router.delete("/:id", authMiddleware, AuthorizeRole("SUPER_ADMIN", "ADMIN"), deleteMember);
 
 export default router;

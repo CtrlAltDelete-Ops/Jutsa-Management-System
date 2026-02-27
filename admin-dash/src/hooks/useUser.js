@@ -1,15 +1,23 @@
 import { useState, createContext, useContext, useEffect } from "react";
-import { LoginUser } from "../services/userServices";
+
 const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // Rehydrate from localStorage on mount so state survives page refreshes
+  const [user, setUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem("user");
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
 
-  const login = async (userData) => {
-    // const expireTime = new Date().getTime() + expirisIn * 1000;
+  // Derived role value — login response shape: { token, data: { role, ... } }
+  const role = user?.data?.role ?? null;
 
+  const login = (userData) => {
     localStorage.setItem("user", JSON.stringify(userData));
-
     setUser(userData);
   };
 
@@ -19,7 +27,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, role, login, logout }}>
       {children}
     </UserContext.Provider>
   );

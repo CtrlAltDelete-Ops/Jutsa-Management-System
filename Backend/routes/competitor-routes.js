@@ -1,19 +1,23 @@
 import express from "express";
-
-import { registerCompetitor, getAllCompetitors,getCompetitorById ,deleteCompetitor, updatedCompetitor } from "../controllers/competitor-controller.js";
-
+import {
+    registerCompetitor,
+    getAllCompetitors,
+    getCompetitorById,
+    deleteCompetitor,
+    updatedCompetitor,
+} from "../controllers/competitor-controller.js";
+import authMiddleware from "../middlewares/auth-middleware.js";
+import AuthorizeRole from "../middlewares/role-middleware.js";
 
 const router = express.Router();
 
-router.post("/", registerCompetitor);
+// Read — all authenticated roles
+router.get("/", authMiddleware, getAllCompetitors);
+router.get("/:id", authMiddleware, getCompetitorById);
 
-router.get("/", getAllCompetitors);
-
-router.get('/:id',getCompetitorById)
-
-router.put("/update/:id", updatedCompetitor)
-
-router.delete("/:id", deleteCompetitor);
-
+// Write — admin and above only
+router.post("/", authMiddleware, AuthorizeRole("SUPER_ADMIN", "ADMIN"), registerCompetitor);
+router.put("/update/:id", authMiddleware, AuthorizeRole("SUPER_ADMIN", "ADMIN"), updatedCompetitor);
+router.delete("/:id", authMiddleware, AuthorizeRole("SUPER_ADMIN", "ADMIN"), deleteCompetitor);
 
 export default router;

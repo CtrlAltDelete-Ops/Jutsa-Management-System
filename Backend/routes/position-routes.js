@@ -6,13 +6,18 @@ import {
   updatePosition,
   deletePosition,
 } from "../controllers/position-controller.js";
+import authMiddleware from "../middlewares/auth-middleware.js";
+import AuthorizeRole from "../middlewares/role-middleware.js";
 
 const router = express.Router();
 
-router.get("/", getAllPositions);
-router.get("/:id", getPositionById);
-router.post("/", registerPosition);
-router.put("/:id", updatePosition);
-router.delete("/:id", deletePosition);
+// Read — all authenticated roles
+router.get("/", authMiddleware, getAllPositions);
+router.get("/:id", authMiddleware, getPositionById);
+
+// Write — admin and above only
+router.post("/", authMiddleware, AuthorizeRole("SUPER_ADMIN", "ADMIN"), registerPosition);
+router.put("/:id", authMiddleware, AuthorizeRole("SUPER_ADMIN", "ADMIN"), updatePosition);
+router.delete("/:id", authMiddleware, AuthorizeRole("SUPER_ADMIN", "ADMIN"), deletePosition);
 
 export default router;

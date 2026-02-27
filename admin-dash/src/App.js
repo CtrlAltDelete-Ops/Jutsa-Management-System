@@ -1,4 +1,4 @@
-import React, { lazy, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -6,10 +6,8 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { themeChange } from "theme-change";
-import checkAuth from "./app/auth";
-import initializeApp from "./app/init";
 import { Toaster } from "react-hot-toast";
+import { useUser } from "./hooks/useUser";
 
 // Importing pages
 const Layout = lazy(() => import("./containers/Layout"));
@@ -17,31 +15,47 @@ const Login = lazy(() => import("./pages/Login"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 const Register = lazy(() => import("./pages/Register"));
 const Documentation = lazy(() => import("./pages/Documentation"));
+const Unauthorized = lazy(() => import("./pages/Unauthorized"));
 
-// Initializing different libraries
-// initializeApp();
-
-// Check for login and initialize axios
-// const token = checkAuth();
+/**
+ * AuthGuard — wraps the entire /app/* section.
+ * If the user is not logged in, redirect to /login immediately.
+ */
+function AuthGuard({ children }) {
+  const { user } = useUser();
+  if (!user) return <Navigate to="/login" replace />;
+  return children;
+}
 
 function App() {
   return (
     <>
       <Toaster />
       <Router>
-        <Routes>
-          <Route path="/login" element={<Login />} />
+        <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><span className="loading loading-spinner loading-lg"></span></div>}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/documentation" element={<Documentation />} />
 
-          {/* Place new routes over this */}
-          <Route path="/app/*" element={<Layout />} />
+            {/* Unauthorized access page — public so the redirect always works */}
+            <Route path="/unauthorized" element={<Unauthorized />} />
 
-          {/* <Route path="/add" element={<AddFinance/>} /> */}
+            {/* Protected app — requires login */}
+            <Route
+              path="/app/*"
+              element={
+                <AuthGuard>
+                  <Layout />
+                </AuthGuard>
+              }
+            />
 
-          {/* <Route path="*" element={<Navigate to={token ? "/app/welcome" : "/login"} replace />}/> */}
-
-          {/* Default Route - If no route matches */}
-          <Route path="*" element={<Navigate to={"/login"} replace />} />
-        </Routes>
+            {/* Default redirect */}
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </Suspense>
       </Router>
     </>
   );

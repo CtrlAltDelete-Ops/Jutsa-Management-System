@@ -1,70 +1,28 @@
-const API = "http://localhost:7005/api/positions";
+import apiClient from "../utils/apiClient";
 
-// Fetch position details
+const ENDPOINT = "/api/positions";
+
 export const fetchPositionDetailsFromAPI = async () => {
-  try {
-    const response = await fetch(API);
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Failed to fetch positions.");
-    return data.data;
-  } catch (error) {
-    throw new Error(error.message || "Something went wrong");
-  }
+  const data = await apiClient(ENDPOINT);
+  return data.data;
 };
 
-// Fetch position details by ID
 export const fetchPositionById = async (id) => {
-  try {
-    const response = await fetch(`${API}/${id}`);
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Failed to fetch position by ID");
-    return data.data;
-  } catch (error) {
-    throw new Error(error.message || "Something went wrong");
-  }
+  const data = await apiClient(`${ENDPOINT}/${id}`);
+  return data.data;
 };
 
-
-// Register a new position
 export const registerPosition = async (formData) => {
-  try {
-    const response = await fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Failed to register position");
-    return data.data;
-  } catch (error) {
-    throw new Error(error.message || "Failed to register position");
-  }
+  const data = await apiClient(ENDPOINT, { method: "POST", body: formData });
+  return data.data;
 };
 
-// Update an existing position
 export const updatePosition = async (id, formData) => {
-  try {
-    const response = await fetch(`${API}/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Failed to update position");
-    return data.data;
-  } catch (error) {
-    throw new Error(error.message || "Failed to update position");
-  }
+  const data = await apiClient(`${ENDPOINT}/${id}`, { method: "PUT", body: formData });
+  return data.data;
 };
 
-// Delete a position
 export const deletePosition = async (id) => {
-  try {
-    const response = await fetch(`${API}/${id}`, { method: "DELETE" });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Failed to delete position");
-    return data.data;
-  } catch (error) {
-    throw new Error(error.message || "Failed to delete position");
-  }
+  const data = await apiClient(`${ENDPOINT}/${id}`, { method: "DELETE" });
+  return data.data;
 };

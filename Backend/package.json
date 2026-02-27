@@ -11,7 +11,11 @@
     "build": "npm run postinstall",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "db-push": "prisma db push"
+    "db-push": "prisma db push",
+    "seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,5 +32,8 @@
     "nodemon": "^3.1.0",
     "prisma": "^6.3.1",
     "react-hot-toast": "^2.4.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1"
   }
 }
